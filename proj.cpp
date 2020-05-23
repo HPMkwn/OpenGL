@@ -15,7 +15,7 @@ struct balls{
     balls() : xcenter((rand() % 1240)- 620),ycenter((rand() % 680)- 340),xdir((rand()%2)==0),ydir((rand()%2)==0),gone(false){}
 };
 
-balls* arr = new balls[100];
+balls ball;
 int board = 0;
 int score=1;
 void myInit(void)
@@ -45,23 +45,21 @@ void keyboard(int key, int x, int y){
 void display (void)  
 { 
     glClear(GL_COLOR_BUFFER_BIT); 
-    for(int n=0;n<=min(100,score%5) && !arr[n].gone ; n++){
-        glBegin(GL_POINTS); 
+    glBegin(GL_POINTS); 
 
-        for ( i = 0; i < (2 * PI); i += 0.1) 
-        { 
-            x = arr[n].xcenter + 5 * cos(i); 
-            y = arr[n].ycenter + 5 * sin(i); 
-            if(x>=620)arr[n].xdir=false;
-            if(x<=-620)arr[n].xdir=true;
-            if(y>=340)arr[n].ydir=false;
-            if(y<=-340){}
-            if(y<=-295 && (board+100 > arr[n].xcenter) && (board-100 < arr[n].xcenter)){arr[n].ydir=true; score++;}
-            glVertex2i(x, y); 
-        } 
-        glEnd();
+    for ( i = 0; i < (2 * PI); i += 0.1) 
+    { 
+        x = ball.xcenter + 5 * cos(i); 
+        y = ball.ycenter + 5 * sin(i); 
+        if(x>=620)ball.xdir=false;
+        if(x<=-620)ball.xdir=true;
+        if(y>=340)ball.ydir=false;
+        if(y<=-340){}
+        if(y<=-295 && (board+100 > ball.xcenter) && (board-100 < ball.xcenter)){ball.ydir=true; score++;}
+        glVertex2i(x, y); 
+    } 
+    glEnd();
 
-    }
 
 
     glBegin(GL_LINE_LOOP); 
@@ -76,10 +74,9 @@ void display (void)
 void timer(int){
     glutPostRedisplay();
     glutTimerFunc(1000/60,timer,0);
-    for(int n=0;n<=min(100,score%5)&& !arr[n].gone ; n++){
-    arr[n].xdir ? arr[n].xcenter+=3 : arr[n].xcenter-=3;
-    arr[n].ydir ? arr[n].ycenter+=3 : arr[n].ycenter-=3;
-    }
+    // for(int n=0;n<=min(100,score%5)&& !ball.gone ; n++){
+    ball.xdir ? ball.xcenter+=3 : ball.xcenter-=3;
+    ball.ydir ? ball.ycenter+=3 : ball.ycenter-=3;
 }
 int main(int argc, char **argv)
 {
