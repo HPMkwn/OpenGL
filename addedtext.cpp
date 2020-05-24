@@ -29,19 +29,19 @@ void myInit(void)
 
     gluOrtho2D(-620.0, 620.0, -340.0, 340.0);
 }
-void RenderString(float x, float y, void *font)
+void RenderString(float x, float y, void *font,int player)
 {
 
-  glColor3f(0.0,1.0,0.0);
-  glRasterPos2f(x, y);
-  stringstream ss;
-  ss << (100-nextfree);
-  string str = ss.str();
-  string showstring = "balls left = " + str;
-  for(unsigned int i=0;i<showstring.length();i++)
-    glutBitmapCharacter(font, showstring[i]);
+    player ==1 ? glColor3f(0.0, 0.0, 1.0) : glColor3f(1.0, 0.0, 0.0);
+    glRasterPos2f(x, y);
+    stringstream ss;
+    ss << (player==1 ? "blue " : "red ");
+    ss << (player==1 ? blueScore : redScore);
+    string str = ss.str();
+    string showstring = "Player "+ str;
+    for(unsigned int i=0;i<showstring.length();i++)
+        glutBitmapCharacter(font, showstring[i]);
 }
-
 void keyboard(int key, int x, int y){
     switch (key) {
         case GLUT_KEY_LEFT:

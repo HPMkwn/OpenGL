@@ -1,4 +1,4 @@
-/** created by : 
+/** created by :
  * U17CO015  Herat Makwana
  * U17CO030  Jiten Vagadiya
 */
@@ -32,6 +32,8 @@ int blueScore = 0;
 bool isThereBall = false;
 int lastThrown = 1;
 int winid = 0;
+int speed = 3;
+int hits = 0;
 
 // Initialization window for it`s characteristics
 void myInit(void)
@@ -101,6 +103,7 @@ void keyboard(int key, int x, int y)
             ball.xdir = false;
             ball.ydir = false;
             lastThrown = 1;
+            hits=0;
         }
         break;
     case GLUT_KEY_F4:
@@ -114,6 +117,7 @@ void keyboard(int key, int x, int y)
             ball.xdir = true;
             ball.ydir = false;
             lastThrown = 1;
+            hits=0;
         }
         break;
     }
@@ -125,9 +129,10 @@ void RenderString(float x, float y, void *font,int player)
     player ==1 ? glColor3f(0.0, 0.0, 1.0) : glColor3f(1.0, 0.0, 0.0);
     glRasterPos2f(x, y);
     stringstream ss;
-    ss << (100-nextfree);
+    ss << (player==1 ? "blue " : "red ");
+    ss << (player==1 ? blueScore : redScore);
     string str = ss.str();
-    string showstring = "Player"+ player + (player==1 ? blueScore : redScore);
+    string showstring = "Player "+ str;
     for(unsigned int i=0;i<showstring.length();i++)
         glutBitmapCharacter(font, showstring[i]);
 }
@@ -141,6 +146,7 @@ void display(void)
     ball.ballboard == 0 ? glColor3f(0.0, 0.0, 1.0) : glColor3f(1.0, 0.0, 0.0);
     if (ball.gone)
     {
+        int change = ball.ydir;
         glBegin(GL_POINTS);
         for (float j = 0; j < (2 * PI); j += 0.1)
         {
@@ -153,10 +159,12 @@ void display(void)
             else if (y <= -295 && (boardblue + 100 > ball.xcenter) && (boardblue - 100 < ball.xcenter))
             {
                 ball.ydir = true;
+
             }
             else if (y >= 295 && (boardred + 100 > ball.xcenter) && (boardred - 100 < ball.xcenter))
             {
                 ball.ydir = false;
+
             }
             else if (y >= 340)
             {
@@ -187,7 +195,11 @@ void display(void)
             }
             glVertex2i(x, y);
         }
+        if(change!=ball.ydir){
+            hits++;
+        }
         glEnd();
+
     }
     glColor3f(0.0, 0.0, 1.0);
     glBegin(GL_LINE_LOOP);
@@ -204,8 +216,8 @@ void display(void)
     glVertex2i(boardred - 100, +315);
     glEnd();
 
-    RenderString(500.0f, 300.0f, GLUT_BITMAP_TIMES_ROMAN_24,1);
-    RenderString(500.0f, -300.0f, GLUT_BITMAP_TIMES_ROMAN_24,0);
+    RenderString(500.0f, -300.0f, GLUT_BITMAP_TIMES_ROMAN_24,1);
+    RenderString(500.0f, 300.0f, GLUT_BITMAP_TIMES_ROMAN_24,0);
 
     glutSwapBuffers();
 }
@@ -216,8 +228,8 @@ void timer(int)
     glutPostRedisplay();
     glutTimerFunc(1000 / 60, timer, 0);
 
-    ball.xdir ? ball.xcenter += 3 : ball.xcenter -= 3;
-    ball.ydir ? ball.ycenter += 3 : ball.ycenter -= 3;
+    ball.xdir ? ball.xcenter += (speed + hits/3) : ball.xcenter -= (speed + hits/3);
+    ball.ydir ? ball.ycenter += (speed + hits/3) : ball.ycenter -= (speed + hits/3);
 }
 
 //Main Function
