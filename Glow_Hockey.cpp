@@ -9,7 +9,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define PI 3.142857
-#define MAX_SCORE 5
+#define MAX_SCORE 2
 GLfloat twicePI = 2.0f * PI;
 
 //Initialization Variables
@@ -49,6 +49,8 @@ void myInit(void)
     gluOrtho2D(-620.0, 620.0, -340.0, 340.0);
 }
 
+
+
 // Keyboard Event function
 void keyboard(int key, int x, int y)
 {
@@ -77,6 +79,7 @@ void keyboard(int key, int x, int y)
             ball.xdir = true;
             ball.ydir = true;
             lastThrown = 0;
+            hits=0;
         }
         break;
     case GLUT_KEY_DOWN:
@@ -90,6 +93,7 @@ void keyboard(int key, int x, int y)
             ball.xdir = false;
             ball.ydir = true;
             lastThrown = 0;
+            hits=0;
         }
         break;
     case GLUT_KEY_F2:
@@ -137,6 +141,21 @@ void RenderString(float x, float y, void *font,int player)
         glutBitmapCharacter(font, showstring[i]);
 }
 
+void WinString(float x, float y, void *font,int player)
+{
+
+    player ==1 ? glColor3f(0.0, 0.0, 1.0) : glColor3f(1.0, 0.0, 0.0);
+    glRasterPos2f(x, y);
+    stringstream ss;
+    ss << (player==1 ? "blue " : "red ");
+    ss << "wins\nscore ";
+    ss << (player==1 ? blueScore : redScore);
+    string str = ss.str();
+    string showstring = "Player "+ str;
+    for(unsigned int i=0;i<showstring.length();i++)
+        glutBitmapCharacter(font, showstring[i]);
+}
+
 
 
 //Display Function
@@ -175,6 +194,7 @@ void display(void)
                 if (blueScore == MAX_SCORE)
                 {
                     printf("player 1 wins");
+                    WinString(-100,50,GLUT_BITMAP_TIMES_ROMAN_24,1);
                     glutDestroyWindow(winid);
                     exit(0);
                 }
@@ -189,6 +209,7 @@ void display(void)
                 if (redScore == MAX_SCORE)
                 {
                     printf("player 2 wins");
+                    WinString(-100,50,GLUT_BITMAP_TIMES_ROMAN_24,0);
                     glutDestroyWindow(winid);
                     exit(0);
                 }
@@ -243,7 +264,7 @@ int main(int argc, char **argv)
 
     glutInitWindowPosition(0, 0);
 
-    winid = glutCreateWindow("Game");
+    winid = glutCreateWindow("Glow Hockey");
 
     myInit();
     glutDisplayFunc(display);
