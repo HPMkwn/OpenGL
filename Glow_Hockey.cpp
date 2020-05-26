@@ -9,7 +9,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define PI 3.142857
-#define MAX_SCORE 2
+#define MAX_SCORE 5
 GLfloat twicePI = 2.0f * PI;
 
 //Initialization Variables

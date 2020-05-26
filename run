@@ -1,0 +1,2 @@
+g++ Glow_Hockey.cpp -lGL -lGLU -lglut
+./a.out
