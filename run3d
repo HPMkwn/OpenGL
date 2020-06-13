@@ -1,0 +1,2 @@
+g++ -o SaveBall main.cpp -lglut -lGLU -lGL
+./SaveBall

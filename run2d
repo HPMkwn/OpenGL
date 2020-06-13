@@ -1,0 +1,2 @@
+g++ -o Hockey Glow_Hockey.cpp -lGL -lGLU -lglut
+./Hockey
