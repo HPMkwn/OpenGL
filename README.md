@@ -9,5 +9,14 @@ Technologies : OpenGL
 
 Project :)
 
-1:) Glow Hockey(2d version)
+1:) 2d version
+
+Run command in Terminal : 
+	./run2d
+	
+	
+	
+2:) 3d version
+Run command in Terminal : 
+	./run3d
 

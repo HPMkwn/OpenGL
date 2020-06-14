@@ -1,10 +1,15 @@
-/** created by :
- * U17CO015  Herat Makwana
- * U17CO030  Jiten Vagadiya
+/** 
+ * Computer Graphics project
+ *
+ * Subject : Save the ball going to wards your head
+ *
+ *
+ * Herat Makwana(U17CO015)
+ * Jiten Vagadiya(U17CO030)
 */
-
-// Import headers
-//#include <windows.h>
+#ifdef __WIN32__
+#include<windows.h>
+#endif
 #include <GL/glut.h>
 #include <bits/stdc++.h>
 using namespace std;
